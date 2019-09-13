@@ -18,10 +18,6 @@ public class ControleCentral {
 	private String arqFloresta;
 	
 	public ControleCentral() {
-		this.arqEsquadrao = "Não informado";
-		this.arqFloresta = "Não informado.";
-		this.esquadrao = null;
-		this.floresta = null;
 	}
 	
 	public ControleCentral(String arqEsquadrao, String arqFloresta) {
@@ -32,12 +28,13 @@ public class ControleCentral {
 	
 	public int cadastrarEsquadrao(String nomeEsq, EspecialidadeEsq especialidadeEsq,
 			int tamEsq) {
-		if (esquadrao.isEmpty()) {
+		if (this.esquadrao.isEmpty()) {
 			Esquadrao esq = new Esquadrao();
 			esq.setNomeEsq(nomeEsq);
 			esq.setEspecialidadeEsq(especialidadeEsq);
 			esq.setTamEsquadrao(tamEsq);
-			
+			esquadrao.add(esq);
+			System.out.println(esq.toString());
 			return 1;
 		} else {
 			if (!this.contemEsquadrao(nomeEsq)) {
@@ -45,13 +42,12 @@ public class ControleCentral {
 				esq.setNomeEsq(nomeEsq);
 				esq.setEspecialidadeEsq(especialidadeEsq);
 				esq.setTamEsquadrao(tamEsq);
-				
+				esquadrao.add(esq);
 				return 1;				
 			}
 		}
 		return 0;
 	}
-	
 	
 	
 	public boolean contemEsquadrao(String nomeEsq) {

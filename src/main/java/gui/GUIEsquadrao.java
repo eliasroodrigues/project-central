@@ -24,32 +24,21 @@ public class GUIEsquadrao extends JFrame {
 	private JPanel contentPane;
 	private JTextField textNomeEsq;
 	private JTextField textTamEsq;
+	private ControleCentral controle;
 	
-	ControleCentral controle = new ControleCentral();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIEsquadrao frame = new GUIEsquadrao();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public GUIEsquadrao(ControleCentral controle) {
+		GUIEsq();
+		this.controle = new ControleCentral();
+		this.controle = controle;
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GUIEsquadrao() {
+	public void GUIEsq() {
 		setResizable(false);
 		setTitle("Cadastro Esquadrão");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,7 +66,7 @@ public class GUIEsquadrao extends JFrame {
 		panel.add(nomeEspecialidadeEsq);
 		
 		JComboBox comboEspeEsq = new JComboBox();
-		comboEspeEsq.setModel(new DefaultComboBoxModel(new String[] {"Resgate de animais"}));
+		comboEspeEsq.setModel(new DefaultComboBoxModel(EspecialidadeEsq.values()));
 		comboEspeEsq.setBounds(239, 75, 199, 24);
 		panel.add(comboEspeEsq);
 		
@@ -94,6 +83,7 @@ public class GUIEsquadrao extends JFrame {
 		JButton btnVoltarEsq = new JButton("Voltar");
 		btnVoltarEsq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				dispose();
 			}
 		});
 		btnVoltarEsq.setBackground(UIManager.getColor("Button.disabledText"));
@@ -103,9 +93,13 @@ public class GUIEsquadrao extends JFrame {
 		JButton btnCadastrarEsq = new JButton("Cadastrar");
 		btnCadastrarEsq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EspecialidadeEsq especialidade = null;
-				controle.cadastrarEsquadrao(textNomeEsq.getText(), especialidade.COMBATE_INCENDIO,
-						Integer.parseInt(textTamEsq.getText()));
+				String nomeEsq = textNomeEsq.getText();
+				EspecialidadeEsq especialidadeEsq = EspecialidadeEsq.valueOf(String.valueOf(comboEspeEsq.getSelectedItem())); 
+				int tamanhoEsq = Integer.parseInt(textTamEsq.getText());
+				controle.cadastrarEsquadrao(
+						nomeEsq,
+						especialidadeEsq,
+						tamanhoEsq);
 			}
 		});
 		btnCadastrarEsq.setBounds(321, 263, 117, 25);
@@ -114,6 +108,9 @@ public class GUIEsquadrao extends JFrame {
 		JButton btnApagarEsq = new JButton("Apagar");
 		btnApagarEsq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				textNomeEsq.setText(" ");
+				textTamEsq.setText(" ");
+				comboEspeEsq.setSelectedIndex(-1);;
 			}
 		});
 		btnApagarEsq.setBounds(192, 263, 117, 25);
