@@ -2,9 +2,9 @@ package central;
 
 public enum EspecialidadeEsq {
 	
-	COMBATE_INCENDIO("Combater incêndio."),
-	RESGATE_ANIMAL("Resgate de animais."),
-	RESGATE_INDIGENA("Resgate de indígenas.");
+	COMBATE_INCENDIO("Combater incêndio"),
+	RESGATE_ANIMAL("Resgate de animais"),
+	RESGATE_INDIGENA("Resgate de indígenas");
 	
 	private String descricao;
 	

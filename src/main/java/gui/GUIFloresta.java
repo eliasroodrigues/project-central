@@ -6,7 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import central.ControleCentral;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
@@ -19,29 +23,20 @@ public class GUIFloresta extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFloresta;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIFloresta frame = new GUIFloresta();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	private ControleCentral controle;
+	
+	public GUIFloresta(ControleCentral controle) {
+		GUIFlo();
+		this.controle = new ControleCentral();
+		this.controle = controle;
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GUIFloresta() {
+	public void GUIFlo() {
 		setTitle("Cadastra Região");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,10 +63,21 @@ public class GUIFloresta extends JFrame {
 		panel.add(lblreaDeProteo);
 		
 		JRadioButton rdbtnSim = new JRadioButton("Sim");
+		JRadioButton rdbtnNo = new JRadioButton("Não");
+		rdbtnSim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnNo.setSelected(false);
+			}
+		});
+		rdbtnSim.setSelected(true);
 		rdbtnSim.setBounds(203, 76, 100, 23);
 		panel.add(rdbtnSim);
 		
-		JRadioButton rdbtnNo = new JRadioButton("Não");
+		rdbtnNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnSim.setSelected(false);
+			}
+		});
 		rdbtnNo.setBounds(342, 72, 100, 23);
 		panel.add(rdbtnNo);
 		
@@ -84,9 +90,12 @@ public class GUIFloresta extends JFrame {
 		comboFloresta.setBounds(263, 124, 175, 24);
 		panel.add(comboFloresta);
 		
+		
+		
 		JButton btnVoltarFloresta = new JButton("Voltar");
 		btnVoltarFloresta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				dispose();
 			}
 		});
 		btnVoltarFloresta.setBounds(12, 263, 117, 25);
@@ -95,6 +104,10 @@ public class GUIFloresta extends JFrame {
 		JButton btnCadastrarFloresta = new JButton("Cadastrar");
 		btnCadastrarFloresta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String radio = null;
+				if (rdbtnSim.isSelected() == true) {
+					radio = "Sim";
+				} else radio = "Não";
 			}
 		});
 		btnCadastrarFloresta.setBounds(321, 263, 117, 25);
@@ -103,6 +116,9 @@ public class GUIFloresta extends JFrame {
 		JButton btnApagarFloresta = new JButton("Apagar");
 		btnApagarFloresta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				textFloresta.setText(" ");
+				rdbtnSim.setSelected(true);
+				rdbtnNo.setSelected(false);
 			}
 		});
 		btnApagarFloresta.setBounds(186, 263, 117, 25);
