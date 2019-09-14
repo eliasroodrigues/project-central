@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // [START drive_quickstart]
-package quickstart;
+package connection;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -81,42 +81,49 @@ public class DriveConnection {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public static void main(String... args) throws IOException, GeneralSecurityException {
+    public static boolean upload(String nomeArquivo) throws IOException, GeneralSecurityException {
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        String idPasta = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
+        try {
+            File json = new File();
+            json.setName(nomeArquivo);
+            json.setParents(Collections.singletonList(idPasta));
+            java.io.File filePath = new java.io.File("files/"+nomeArquivo);
+            FileContent mediaContent = new FileContent(null, filePath);
+            File file = service.files().create(json, mediaContent)
+                    .setFields("id, parents")
+                    .execute();
+        } catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return false;
+    }
+
+    /*public static void StartConnection() {
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }*/
+
+    /*public static void main(String... args) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-        /*// Print the names and IDs for up to 10 files.
-        FileList result = service.files().list()
-                .setPageSize(10)
-                .setFields("nextPageToken, files(id, name)")
-                .execute();
-        List<File> files = result.getFiles();
-        if (files == null || files.isEmpty()) {
-            System.out.println("No files found.");
-        } else {
-            System.out.println("Files:");
-            for (File file : files) {
-                System.out.printf("%s (%s)\n", file.getName(), file.getId());
-            }
-        }*/
-        
-        String idPasta = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
-        File jsonEsquadrao = new File();
-        jsonEsquadrao.setName("esquadrao.json");
-        jsonEsquadrao.setParents(Collections.singletonList(idPasta));
-        java.io.File filePath = new java.io.File("src/files/esquadrao.json");
-        FileContent mediaContent = new FileContent(null, filePath);
-        File file = service.files().create(jsonEsquadrao, mediaContent)
-                .setFields("id, parents")
-                .execute();
-
-        /*String fileId = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
+        String fileId = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
         OutputStream outputStream = new ByteArrayOutputStream();
         driveService.files().export(fileId, "application/vnd.google-apps.script+json")
-            .executeMediaAndDownloadTo(outputStream);*/
-    }
+            .executeMediaAndDownloadTo(outputStream);
+    }*/
+
 }
 // [END drive_quickstart]
