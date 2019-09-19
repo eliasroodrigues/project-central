@@ -81,12 +81,12 @@ public class ControleCentral {
 	}
 
 	public int cadastrarRegiao(String nomeReg, ProtecaoFloresta areaProtec,
-			Esquadrao esqProtec, String imagemRegiao) {
+			String nomeEsq, String imagemRegiao) {
 		if (this.floresta.isEmpty()) {
 			Floresta flor = new Floresta();
 			flor.setNomeRegiao(nomeReg);
 			flor.setAreaProtecao(areaProtec);
-			flor.setEsquadrao(esqProtec);
+			flor.setEsquadrao(retornaEsquadrao(nomeEsq));
 			flor.setImagemRegiao(imagemRegiao);
 			floresta.add(flor);
 			System.out.println(flor.toString());
@@ -96,7 +96,7 @@ public class ControleCentral {
 				Floresta flor = new Floresta();
 				flor.setNomeRegiao(nomeReg);
 				flor.setAreaProtecao(areaProtec);
-				flor.setEsquadrao(esqProtec);
+				flor.setEsquadrao(retornaEsquadrao(nomeEsq));
 				flor.setImagemRegiao(imagemRegiao);
 				floresta.add(flor);
 				System.out.println(flor.toString());
@@ -126,6 +126,18 @@ public class ControleCentral {
 			}
 		}
 		return false;
+	}
+	
+	public Esquadrao retornaEsquadrao(String nomeEsq) {
+
+		Esquadrao Esq = new Esquadrao();
+		for (int i = 0; i < esquadrao.size(); i++) {
+			if (esquadrao.get(i).getNomeEsq().equals(nomeEsq)){
+				Esq = esquadrao.get(i);
+				return Esq;
+			}	
+		}
+		return null;
 	}
 
 	public String[] nomesEsquadrao() {
@@ -161,7 +173,7 @@ public class ControleCentral {
     }
 
     public boolean importarDados(String arqEsquadrao, String arqFloresta) {
-    	return !(!importarEsquadrao(arqEsquadrao) || !importarFloresta(arqFloresta));
+    	return !(!importarEsquadrao(arqEsquadrao)  || !importarFloresta(arqFloresta));
     }
 	
 	public boolean esquadraoToJson(String nomeArq) {
@@ -241,7 +253,7 @@ public class ControleCentral {
                     floresta = gson.fromJson(linha, Floresta.class);
                     cadastrarRegiao(floresta.getNomeRegiao(),
                     				floresta.getAreaProtecao(),
-                    				floresta.getEsquadrao(),
+                    				floresta.getEsq(),
                     				floresta.getImagemRegiao());
                     System.out.println(floresta.toString());
                     linha = leitor.readLine();

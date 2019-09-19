@@ -42,6 +42,10 @@ public class Floresta {
 		return esquadrao;
 	}
 	
+	public String getEsq() {
+		return esquadrao.getNomeEsq();
+	}
+	
 	public void setEsquadrao(Esquadrao esquadrao) {
 		this.esquadrao = esquadrao;
 	}

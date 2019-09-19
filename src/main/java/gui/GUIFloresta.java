@@ -121,7 +121,7 @@ public class GUIFloresta extends JFrame {
 				ProtecaoFloresta protecaoFlo =
 					ProtecaoFloresta.valueOf(String.valueOf(radio)); 
 
-				// esquadrao = comboFloresta.getSelectedItem();
+				String nomeEsq = comboFloresta.getSelectedItem().toString();
 
 				if (textFloresta.getText().trim().equals("")) {
 					JOptionPane.showMessageDialog(null, "Informe o nome da região.",
@@ -132,7 +132,7 @@ public class GUIFloresta extends JFrame {
                     		"Alerta", JOptionPane.WARNING_MESSAGE);
 					} else {
 						String nomeRegiao = textFloresta.getText();
-						controle.cadastrarRegiao(nomeRegiao, protecaoFlo, null, "Não informado");
+						controle.cadastrarRegiao(nomeRegiao, protecaoFlo, nomeEsq, "Não informado");
 					}
 				}
 			}
