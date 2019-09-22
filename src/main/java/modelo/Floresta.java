@@ -1,4 +1,4 @@
-package central;
+package modelo;
 
 public class Floresta {
 	
@@ -10,7 +10,7 @@ public class Floresta {
 	public Floresta() {
 		this.nomeRegiao = "Não informado.";
 		this.areaProtecao = null;
-		this.esquadrao = null;
+		this.esquadrao = new Esquadrao();
 		this.imagemRegiao = "Não informado.";
 	}
 	
@@ -18,6 +18,7 @@ public class Floresta {
 			Esquadrao esquadrao, String imagemRegiao) {
 		this.nomeRegiao = nomeRegiao;
 		this.areaProtecao = areaProtecao;
+		this.esquadrao = new Esquadrao();
 		this.esquadrao = esquadrao;
 		this.imagemRegiao = imagemRegiao;
 	}
@@ -62,7 +63,7 @@ public class Floresta {
 		String retorno = 
 				"Floresta: " + this.getNomeRegiao() +
 				"\nÁrea de Proteção: " + this.getAreaProtecao() +
-				"\nEsquadrão: " + this.getEsquadrao().getNomeEsq() +
+				"\nEsquadrão: " + this.getEsquadrao() +
 				"\nImagem: " + this.getImagemRegiao() +
 				".\n";
 		

@@ -1,4 +1,4 @@
-package central;
+package dao;
 
 import javax.swing.JOptionPane;
 import java.io.FileWriter;
@@ -11,11 +11,12 @@ import java.security.GeneralSecurityException;
 import com.google.gson.Gson;
 
 import connection.DriveConnection;
+import modelo.*;
 
 public class ControleCentral {
 	
-	private List<Esquadrao> esquadrao = new ArrayList<>(10);
-	private List<Floresta>  floresta  = new ArrayList<>(10);
+	private List<Esquadrao> esquadrao;
+	private List<Floresta>  floresta;
 	private String arqEsquadrao;
 	private String arqFloresta;
 	
@@ -24,8 +25,8 @@ public class ControleCentral {
 	 * como nulo e os nomes dos arquivos como Não informado.
 	 */
 	public ControleCentral() {
-		this.esquadrao = null;
-		this.floresta = null;
+		this.esquadrao = new ArrayList<>(10);
+		this.floresta  = new ArrayList<>(10);
 		this.arqEsquadrao = "Não informado";
 		this.arqFloresta = "Não informado";
 	}
@@ -40,6 +41,7 @@ public class ControleCentral {
 	 *					   dados das regiões cadastradas.
 	 */
 	public ControleCentral(String arqEsquadrao, String arqFloresta) {
+		this();
 		this.arqEsquadrao = arqEsquadrao;
 		this.arqFloresta = arqFloresta;
 		this.importarDados(arqEsquadrao, arqFloresta);
@@ -129,7 +131,6 @@ public class ControleCentral {
 	}
 	
 	public Esquadrao retornaEsquadrao(String nomeEsq) {
-
 		Esquadrao Esq = new Esquadrao();
 		for (int i = 0; i < esquadrao.size(); i++) {
 			if (esquadrao.get(i).getNomeEsq().equals(nomeEsq)){
@@ -179,7 +180,7 @@ public class ControleCentral {
 	public boolean esquadraoToJson(String nomeArq) {
         Gson gson = new Gson();
         try {
-            try (FileWriter writer = new FileWriter("files/"+nomeArq)) {
+            try (FileWriter writer = new FileWriter("src/files/"+nomeArq)) {
                 for (int i = 0; i < esquadrao.size(); i++) {
                     if (esquadrao.get(i) != null) {
                         String aux = gson.toJson(esquadrao.get(i));
@@ -198,7 +199,7 @@ public class ControleCentral {
 	public boolean florestaToJson(String nomeArq) {
         Gson gson = new Gson();
         try {
-            try (FileWriter writer = new FileWriter("files/"+nomeArq)) {
+            try (FileWriter writer = new FileWriter("src/files/"+nomeArq)) {
                 for (int i = 0; i < floresta.size(); i++) {
                     if (floresta.get(i) != null) {
                         String aux = gson.toJson(floresta.get(i));
@@ -220,7 +221,7 @@ public class ControleCentral {
 
         try {
             FileReader reader;
-            reader = new FileReader("files/"+nomeArq);
+            reader = new FileReader("src/files/"+nomeArq);
             try (BufferedReader leitor = new BufferedReader(reader)) {
                 String linha = leitor.readLine();
 
@@ -245,7 +246,7 @@ public class ControleCentral {
 
         try {
             FileReader reader;
-            reader = new FileReader("files/"+nomeArq);
+            reader = new FileReader("src/files/"+nomeArq);
             try (BufferedReader leitor = new BufferedReader(reader)) {
                 String linha = leitor.readLine();
 
