@@ -1,4 +1,4 @@
-package central;
+package modelo;
 
 public class Esquadrao {
 	

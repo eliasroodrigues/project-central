@@ -11,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-// [START drive_quickstart]
 package connection;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -52,10 +50,7 @@ public class DriveConnection {
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
-    //private static final List<String> SCOPES = Arrays.asList(DriveScopes.DRIVE);
     private static final String CREDENTIALS_FILE_PATH = "/client_secret.json";
-    //private static final java.io.File DATA_STORE_DIR = 
-    //    new java.io.File(System.getProperty("user.home"), ".credentials/2/drive-java-quickstart.json");
 
     /**
      * Creates an authorized Credential object.
@@ -88,42 +83,57 @@ public class DriveConnection {
                 .build();
 
         String idPasta = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
-        try {
+        
+        FileList result = service.files().list()
+                .setQ("name contains '"+nomeArquivo+"' and parents in '"+idPasta+"' and trashed = false")
+                .setFields("nextPageToken, files(name, id, parents)")
+                .execute();
+
+        List<File> files = result.getFiles();
+
+        if (files == null || files.isEmpty()) {
+            try {
             File json = new File();
             json.setName(nomeArquivo);
             json.setParents(Collections.singletonList(idPasta));
-            java.io.File filePath = new java.io.File("files/"+nomeArquivo);
+            java.io.File filePath = new java.io.File("src/files/"+nomeArquivo);
             FileContent mediaContent = new FileContent(null, filePath);
             File file = service.files().create(json, mediaContent)
-                    .setFields("id, parents")
                     .execute();
-        } catch(IOException e) {
-            e.printStackTrace();
-            return false;
+            } catch(IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            try {
+                File json = new File();
+                json.setName(nomeArquivo);
+                java.io.File filePath = new java.io.File("src/files/"+nomeArquivo);
+                FileContent mediaContent = new FileContent(null, filePath);
+                File file = service.files().update(files.get(0).getId(), json,
+                    mediaContent).execute();
+            } catch(IOException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
-
         return false;
     }
 
-    /*public static void StartConnection() {
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }*/
-
-    /*public static void main(String... args) throws IOException, GeneralSecurityException {
-        // Build a new authorized API client service.
+    /*public static boolean download() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-        String fileId = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
-        OutputStream outputStream = new ByteArrayOutputStream();
-        driveService.files().export(fileId, "application/vnd.google-apps.script+json")
-            .executeMediaAndDownloadTo(outputStream);
+        String idPasta = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
+        
+        FileList result = service.files().list()
+                .setQ("name contains '"+nomeArquivo+"' and parents in '"+idPasta+"' and trashed = false")
+                .setFields("nextPageToken, files(name, id, parents)")
+                .execute();
+
+        List<File> files = result.getFiles();
     }*/
 
 }
-// [END drive_quickstart]

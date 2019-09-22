@@ -1,4 +1,4 @@
-package central;
+package modelo;
 
 public enum EspecialidadeEsq {
 	
@@ -7,8 +7,8 @@ public enum EspecialidadeEsq {
 	RESGATE_INDIGENA("Resgate de indígenas");
 	
 	private String descricao;
-	
-	private EspecialidadeEsq(String descricao) {
+
+	EspecialidadeEsq(String descricao) {
 		this.descricao = descricao;
 	}
 	

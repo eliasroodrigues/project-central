@@ -1,8 +1,8 @@
-package central;
+package visao;
 
-import gui.*;
-import connection.*;
-// import util.*;
+import dao.ControleCentral;
+import gui.GUIPrincipal;
+import connection.DriveConnection;
 
 public class Principal {
 	public static void main(String[] args) {

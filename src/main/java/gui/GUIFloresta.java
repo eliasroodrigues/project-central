@@ -1,16 +1,11 @@
 package gui;
 
+// Importações para criação de janela.
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import central.ControleCentral;
-import central.ProtecaoFloresta;
-import central.Esquadrao;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -21,12 +16,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+// Importações dos códigos do programa.
+import dao.ControleCentral;
+import modelo.ProtecaoFloresta;
+
 public class GUIFloresta extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFloresta;
 	private ControleCentral controle;
-	private Esquadrao esquadrao;
 	private JComboBox comboFloresta = new JComboBox();
 	
 	public GUIFloresta(ControleCentral controle) {
