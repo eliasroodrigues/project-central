@@ -1,6 +1,15 @@
+/*
+*   Trabalho I de POO   
+*
+*   Classe: GUIPrincipal.java
+*
+*   Alunos: Ana Paula Pacheco
+*           Elias Eduardo Silva Rodrigues
+*
+*/
+
 package gui;
 
-// Importações para criação de janela.
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -13,15 +22,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import javax.swing.JOptionPane;
 
-// Importações dos códigos do programa.
 import dao.ControleCentral;
+import connection.DriveConnection;
 
 public class GUIPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private ControleCentral controle;
 	
+	/**
+	 * Construtor da classe para inicializar a interface e receber
+	 * os dados do controle, assim como receber o nome das regiões
+	 * já cadastradas.
+	 *
+	 * @param controle Recebe o ControleSatelie para ter acesso 
+	 *				   aos dados.
+	 */
 	public GUIPrincipal(ControleCentral controle) {
 		GUIPri();
 		this.controle = new ControleCentral();
@@ -75,6 +93,20 @@ public class GUIPrincipal extends JFrame {
 		JButton btnBuscarDados = new JButton("Buscar Dados");
 		btnBuscarDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					if (DriveConnection.download()) {
+						controle.importarDados(controle.getArqEsquadrao(), controle.getArqFloresta());
+						JOptionPane.showMessageDialog(null, "Dados baixados com sucesso!",
+        					"Informação", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Sem informações para buscar.",
+        					"Informação", JOptionPane.INFORMATION_MESSAGE);	
+					} 
+				} catch(IOException f) {
+					f.printStackTrace();
+				} catch(GeneralSecurityException g) {
+					g.printStackTrace();
+				}
 			}
 		});
 		btnBuscarDados.setBounds(29, 234, 166, 25);

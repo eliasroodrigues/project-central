@@ -1,6 +1,15 @@
+/*
+*   Trabalho I de POO   
+*
+*   Classe: GUIEsquadrao.java
+*
+*   Alunos: Ana Paula Pacheco
+*           Elias Eduardo Silva Rodrigues
+*
+*/
+
 package gui;
 
-// Importações para criação de janela.
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -16,7 +25,6 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-// Importações dos códigos do programa.
 import dao.ControleCentral;
 import modelo.EspecialidadeEsq;
 
@@ -27,6 +35,14 @@ public class GUIEsquadrao extends JFrame {
 	private JTextField textTamEsq;
 	private ControleCentral controle;
 	
+	/**
+	 * Construtor da classe para inicializar a interface e receber
+	 * os dados do controle, assim como receber o nome das regiões
+	 * já cadastradas.
+	 *
+	 * @param controle Recebe o ControleSatelie para ter acesso 
+	 *				   aos dados.
+	 */
 	public GUIEsquadrao(ControleCentral controle) {
 		GUIEsq();
 		this.controle = new ControleCentral();

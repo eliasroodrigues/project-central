@@ -1,3 +1,13 @@
+/*
+*   Trabalho I de POO   
+*
+*   Classe: Floresta.java
+*
+*   Alunos: Ana Paula Pacheco
+*           Elias Eduardo Silva Rodrigues
+*
+*/
+
 package modelo;
 
 public class Floresta {
@@ -7,6 +17,9 @@ public class Floresta {
 	private Esquadrao esquadrao;
 	private String imagemRegiao;
 	
+	/**
+	 * Construtor sem parâmetro para a classe.
+	 */
 	public Floresta() {
 		this.nomeRegiao = "Não informado.";
 		this.areaProtecao = null;
@@ -14,6 +27,14 @@ public class Floresta {
 		this.imagemRegiao = "Não informado.";
 	}
 	
+	/**
+	 * Construtor com parâmetro para a classe.
+	 * 
+	 * @param nomeRegiao Nome da região.
+	 * @param areaProtecao Tipo da area de proteção.
+	 * @param esquadrao Esquadrão alocado a região.
+	 * @param imagemRegiao Nome da imagem da região.
+	 */
 	public Floresta(String nomeRegiao, ProtecaoFloresta areaProtecao,
 			Esquadrao esquadrao, String imagemRegiao) {
 		this.nomeRegiao = nomeRegiao;
@@ -23,42 +44,37 @@ public class Floresta {
 		this.imagemRegiao = imagemRegiao;
 	}
 	
-	public String getNomeRegiao() {
-		return nomeRegiao;
-	}
+	public String getNomeRegiao() { return nomeRegiao; }
 	
 	public void setNomeRegiao(String nomeRegiao) {
 		this.nomeRegiao = nomeRegiao;
 	}
 	
-	public ProtecaoFloresta getAreaProtecao() {
-		return areaProtecao;
-	}
+	public ProtecaoFloresta getAreaProtecao() { return areaProtecao; }
 
 	public void setAreaProtecao(ProtecaoFloresta areaProtecao) {
 		this.areaProtecao = areaProtecao;
 	}
 
-	public Esquadrao getEsquadrao() {
-		return esquadrao;
-	}
+	public Esquadrao getEsquadrao() { return esquadrao; }
 	
-	public String getEsq() {
-		return esquadrao.getNomeEsq();
-	}
+	public String getEsq() { return esquadrao.getNomeEsq(); }
 	
 	public void setEsquadrao(Esquadrao esquadrao) {
 		this.esquadrao = esquadrao;
 	}
 	
-	public String getImagemRegiao() {
-		return imagemRegiao;
-	}
+	public String getImagemRegiao() { return imagemRegiao; }
 	
 	public void setImagemRegiao(String imagemRegiao) {
 		this.imagemRegiao = imagemRegiao;
 	}
 	
+	/**
+	 * Método toString(). 
+	 *
+	 * @return Texto dos atributos da classe.
+	 */
 	public String toString() {
 		String retorno = 
 				"Floresta: " + this.getNomeRegiao() +
@@ -69,5 +85,4 @@ public class Floresta {
 		
 		return retorno;
 	}
-	
 }

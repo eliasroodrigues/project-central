@@ -1,3 +1,13 @@
+/*
+*   Trabalho I de POO   
+*
+*   Classe: DriveConnection.java
+*
+*   Alunos: Ana Paula Pacheco
+*           Elias Eduardo Silva Rodrigues
+*
+*/
+
 // Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +38,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.api.services.drive.Drive.Files.Get;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,6 +87,15 @@ public class DriveConnection {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
+    /**
+     * Método para conectar-se com a pasta do google drive e fazer o upload dos
+     * arquivos necessários. Também verifica a existência do arquivo e o atualiza
+     * com as novas informações.
+     *
+     * @param nomeArquivo Nome do arquivo a ser feito o upload na pasta.
+     *
+     * @return true se deu certo ou false se não.
+     */
     public static boolean upload(String nomeArquivo) throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
@@ -117,10 +137,16 @@ public class DriveConnection {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
-    /*public static boolean download() throws IOException, GeneralSecurityException {
+    /**
+     * Método para conectar-se com a pasta do google drive e fazer o download dos
+     * arquivos necessários.
+     *
+     * @return true se deu certo ou false se não.
+     */
+    public static boolean download() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -129,11 +155,28 @@ public class DriveConnection {
         String idPasta = "1wu2TplaNWcJLrNgt77AiBSjRfU6AJ8AD";
         
         FileList result = service.files().list()
-                .setQ("name contains '"+nomeArquivo+"' and parents in '"+idPasta+"' and trashed = false")
+                .setQ("parents in '"+idPasta+"' and trashed = false")
                 .setFields("nextPageToken, files(name, id, parents)")
                 .execute();
 
         List<File> files = result.getFiles();
-    }*/
 
+        System.out.println("Arquivos: " + files);
+
+        if (!(files == null || files.isEmpty())) {
+            try {
+                for (int i = 0; i < files.size(); i++) {
+                    OutputStream outputStream = new FileOutputStream("src/files/" + files.get(i).getName());
+                    service.files().get(files.get(i).getId()).executeMediaAndDownloadTo(outputStream);
+                    outputStream.close();
+                }
+            } catch(IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 }
