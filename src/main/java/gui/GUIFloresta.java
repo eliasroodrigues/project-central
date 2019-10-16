@@ -1,6 +1,15 @@
+/*
+*   Trabalho I de POO   
+*
+*   Classe: GUIFloresta.java
+*
+*   Alunos: Ana Paula Pacheco
+*           Elias Eduardo Silva Rodrigues
+*
+*/
+
 package gui;
 
-// Importações para criação de janela.
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -16,7 +25,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-// Importações dos códigos do programa.
 import dao.ControleCentral;
 import modelo.ProtecaoFloresta;
 
@@ -27,6 +35,14 @@ public class GUIFloresta extends JFrame {
 	private ControleCentral controle;
 	private JComboBox comboFloresta = new JComboBox();
 	
+	/**
+	 * Construtor da classe para inicializar a interface e receber
+	 * os dados do controle, assim como receber o nome das regiões
+	 * já cadastradas.
+	 *
+	 * @param controle Recebe o ControleSatelie para ter acesso 
+	 *				   aos dados.
+	 */
 	public GUIFloresta(ControleCentral controle) {
 		GUIFlo();
 		this.controle = new ControleCentral();
@@ -94,7 +110,6 @@ public class GUIFloresta extends JFrame {
 		lblEsquadroResponsvel.setBounds(12, 129, 175, 15);
 		panel.add(lblEsquadroResponsvel);
 		
-		// JComboBox comboFloresta = new JComboBox();
 		comboFloresta.setModel(new DefaultComboBoxModel(new String[] {"Sem esquadrão"}));
 		comboFloresta.setBounds(263, 124, 175, 24);
 		panel.add(comboFloresta);
